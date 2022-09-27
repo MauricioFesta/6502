@@ -1,2 +1,2 @@
-src/games.o
+src/game.o
 src/reset.o
