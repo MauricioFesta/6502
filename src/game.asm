@@ -16,32 +16,33 @@
 	STA $2005
 	STA $2005
 
-	LatchController:
-		LDA #$01
-		STA $4016
-		LDA #$00
-		STA $4016       ; tell both the controllers to latch buttons
+LatchController:
+	LDA #$01
+	STA $4016
+	LDA #$00
+	STA $4016       ; tell both the controllers to latch buttons
 	
-	ReadA: 
-		LDX #$00
-		LDA $4016       ; player 1 - A
-		AND #%00000001  ; only look at bit 0
-		BEQ ReadADone   ; branch to ReadADone if button is NOT pressed (0)
-		load_sprites1:
-			LDA sprites1,X
-			STA $0200,X
-			INX
-			CPX #$10
-			BNE load_sprites1 
+ReadA: 
+	LDX #$00
+	LDA $4016       ; player 1 - A
+	AND #%00000001  ; only look at bit 0
+	BEQ ReadADone   ; branch to ReadADone if button is NOT pressed (0)
+load_sprites1:
+	LDA sprites1,X
+	STA $0200,X
+	INX
+	CPX #$10
+	BNE load_sprites1 
 
-	ReadADone:  
-		; load_sprites:
-		; 	LDA sprites,X
-		; 	STA $0200,X
-		; 	INX
-		; 	CPX #$10
-		; 	BNE load_sprites 
+ReadADone:  
+	; load_sprites:
+	; 	LDA sprites,X
+	; 	STA $0200,X
+	; 	INX
+	; 	CPX #$10
+	; 	BNE load_sprites 
 
+	
 	RTI 
 
 .endproc
