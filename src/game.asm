@@ -23,27 +23,41 @@ LatchController:
 	STA $4016       ; tell both the controllers to latch buttons
 	
 ReadA: 
-	LDX #$00
 	LDA $4016       ; player 1 - A
-	AND #%00000001  ; only look at bit 0
-	BEQ ReadADone   ; branch to ReadADone if button is NOT pressed (0)
-load_sprites1:
-	LDA sprites1,X
-	STA $0200,X
-	INX
-	CPX #$10
-	BNE load_sprites1 
+	AND #%00000001  ; only look at bit 1
+	BEQ ReadADone 
+	  
+	LDA $0203
+	CLD
+	ADC #$04
+	STA $0203
 
-ReadADone:  
-	; load_sprites:
-	; 	LDA sprites,X
-	; 	STA $0200,X
-	; 	INX
-	; 	CPX #$10
-	; 	BNE load_sprites 
+	;STA $0203
+	LDA $0203
+	CLD
+	ADC #$04
+	STA $0207
 
+	; LDA $0203
+	; CLD
+	; ADC #$04
+	; STA $0203
+
+
+	; LDA $0210
+	; CLD
+	; ADC #$04
+	; STA $0210
+
+	; LDA $0211
+	; CLD
+	; ADD #$04
+	; STA $0211
 	
-	RTI 
+
+
+ReadADone:
+	RTI  
 
 .endproc
 
@@ -65,6 +79,13 @@ load_palettes:
   BNE load_palettes
   LDX #$00
 
+load_sprites:
+	LDA sprites1,X
+	STA $0200,X
+	CPX #$10
+	INX
+	BNE load_sprites
+	LDX #$00
 	  ; write nametables
 	; big stars first
 	LDA PPUSTATUS
