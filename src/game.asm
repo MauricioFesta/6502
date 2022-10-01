@@ -36,16 +36,14 @@ ReadBandY:
 ReadBack: 
   LDA $4016       ; player 1 - A
   AND #%00000001 
-  BEQ ReadStart   
+  BEQ ReadStart  
+  JMP reset_handler
   
 
 ReadStart: 
   LDA $4016       ; player 1 - A
   AND #%00000001 
   BEQ ReadUp   
-
-  JMP reset_handler
-
 
 ReadUp: 
   LDA $4016       ; player 1 - A
