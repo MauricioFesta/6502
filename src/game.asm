@@ -22,41 +22,186 @@ LatchController:
 	LDA #$00
 	STA $4016       ; tell both the controllers to latch buttons
 	
-ReadA: 
-	LDA $4016       ; player 1 - A
-	AND #%00000001  ; only look at bit 1
-	BEQ ReadADone 
-	  
+
+ReadYandB: 
+  LDA $4016       ; player 1 - A
+  AND #%00000001 
+  BEQ ReadXandA ; branch to ReadADone if button is NOT pressed (0)
+  LDX #$00
+  
+	CLC
 	LDA $0203
-	CLD
-	ADC #$04
+	ADC #$05
 	STA $0203
+	
+	LDA $0207
+	CLD
+	ADC #$05
+	STA $0207	
 
-	;STA $0203
+	LDA $20B
+	CLD
+	ADC #$05
+	STA $20B
+
+	LDA $20F
+	CLD
+	ADC #$05
+	STA $20F
+
+ReadXandA: 
+	LDA $4016       ; player 1 - A
+	AND #%00000001  
+	BEQ ReadUp 
+	LDX #$00
+	
 	LDA $0203
 	CLD
-	ADC #$04
-	STA $0207
-
-	; LDA $0203
-	; CLD
-	; ADC #$04
-	; STA $0203
-
-
-	; LDA $0210
-	; CLD
-	; ADC #$04
-	; STA $0210
-
-	; LDA $0211
-	; CLD
-	; ADD #$04
-	; STA $0211
+	TAX
+	DEX
+	DEX
+	DEX
+	DEX
+	DEX
+	TXA
+	STA $0203
 	
+	LDA $0207
+	CLD
+	TAX
+	DEX
+	DEX
+	DEX
+	DEX
+	DEX
+	TXA
+	STA $0207	
+
+	LDA $20B
+	CLD
+	TAX
+	DEX
+	DEX
+	DEX
+	DEX
+	DEX
+	TXA
+	STA $20B
+
+	LDA $20F
+	CLD
+	TAX
+	DEX
+	DEX
+	DEX
+	DEX
+	DEX
+	TXA
+	STA $20F
 
 
-ReadADone:
+
+ReadUp: 
+  LDA $4016       ; player 1 - A
+  AND #%00000001 
+  BEQ ReadStart   
+  	; CLC
+	; LDA $0203
+	; ADC #$05
+	; STA $0203
+	
+	; LDA $0207
+	; CLD
+	; ADC #$05
+	; STA $0207	
+
+	; LDA $20B
+	; CLD
+	; ADC #$05
+	; STA $20B
+
+	; LDA $20F
+	; CLD
+	; ADC #$05
+	; STA $20F
+
+
+ReadStart: 
+  LDA $4016       ; player 1 - A
+  AND #%00000001 
+  BEQ ReadXandADone   
+	CLC
+	LDA $0203
+	ADC #$05
+	STA $0203
+	
+	LDA $0207
+	CLD
+	ADC #$05
+	STA $0207	
+
+	LDA $20B
+	CLD
+	ADC #$05
+	STA $20B
+
+	LDA $20F
+	CLD
+	ADC #$05
+	STA $20F
+
+
+; ReadLeft: 
+;   LDA $4016       ; player 1 - A
+;   AND #%00000001  ; only look at bit 0
+;   BEQ ReadRight   ; branch to ReadADone if button is NOT pressed (0)
+
+;   	CLC
+; 	LDA $0203
+; 	ADC #$05
+; 	STA $0203
+	
+; 	LDA $0207
+; 	CLD
+; 	ADC #$05
+; 	STA $0207	
+
+; 	LDA $20B
+; 	CLD
+; 	ADC #$05
+; 	STA $20B
+
+; 	LDA $20F
+; 	CLD
+; 	ADC #$05
+; 	STA $20F
+
+ReadRight: 
+  LDA $4016       ; player 1 - A
+  AND #%00000001  ; only look at bit 0
+  BEQ ReadXandADone ; branch to ReadADone if button is NOT pressed (0)
+
+  	CLC
+	LDA $0203
+	ADC #$05
+	STA $0203
+	
+	LDA $0207
+	CLD
+	ADC #$05
+	STA $0207	
+
+	LDA $20B
+	CLD
+	ADC #$05
+	STA $20B
+
+	LDA $20F
+	CLD
+	ADC #$05
+	STA $20F
+
+ReadXandADone:
 	RTI  
 
 .endproc
@@ -78,7 +223,7 @@ load_palettes:
   CPX #$20
   BNE load_palettes
   LDX #$00
-
+ 
 load_sprites:
 	LDA sprites1,X
 	STA $0200,X
@@ -86,118 +231,120 @@ load_sprites:
 	INX
 	BNE load_sprites
 	LDX #$00
-	  ; write nametables
+
+	; write nametables
 	; big stars first
-	LDA PPUSTATUS
-	LDA #$20
-	STA PPUADDR
-	LDA #$6b
-	STA PPUADDR
-	LDX #$2f
-	STX PPUDATA
+	;LDA PPUSTATUS
+	; LDA #$20
+	; STA PPUADDR
+	; LDA #$6b
+	; STA PPUADDR
+	; LDX #$2f
+	; STX PPUDATA
 
-	LDA PPUSTATUS
-	LDA #$21
-	STA PPUADDR
-	LDA #$57
-	STA PPUADDR
-	STX PPUDATA
+	; LDA PPUSTATUS
+	; LDA #$21
+	; STA PPUADDR
+	; LDA #$59
+	; STA PPUADDR
+	; STX PPUDATA
 
-	LDA PPUSTATUS
-	LDA #$22
-	STA PPUADDR
-	LDA #$23
-	STA PPUADDR
-	STX PPUDATA
+	; LDA PPUSTATUS
+	; LDA #$22
+	; STA PPUADDR
+	; LDA #$23
+	; STA PPUADDR
+	; STX PPUDATA
 
-	LDA PPUSTATUS
-	LDA #$23
-	STA PPUADDR
-	LDA #$52
-	STA PPUADDR
-	STX PPUDATA
+	; LDA PPUSTATUS
+	; LDA #$23
+	; STA PPUADDR
+	; LDA #$52
+	; STA PPUADDR
+	; STX PPUDATA
 
-	; next, small star 1
-	LDA PPUSTATUS
-	LDA #$20
-	STA PPUADDR
-	LDA #$74
-	STA PPUADDR
-	LDX #$2d
-	STX PPUDATA
+	; ; next, small star 1
+	; LDA PPUSTATUS
+	; LDA #$20
+	; STA PPUADDR
+	; LDA #$74
+	; STA PPUADDR
+	; LDX #$2d
+	; STX PPUDATA
 
-	LDA PPUSTATUS
-	LDA #$21
-	STA PPUADDR
-	LDA #$43
-	STA PPUADDR
-	STX PPUDATA
+	; LDA PPUSTATUS
+	; LDA #$21
+	; STA PPUADDR
+	; LDA #$43
+	; STA PPUADDR
+	; STX PPUDATA
 
-	LDA PPUSTATUS
-	LDA #$21
-	STA PPUADDR
-	LDA #$5d
-	STA PPUADDR
-	STX PPUDATA
+	; LDA PPUSTATUS
+	; LDA #$21
+	; STA PPUADDR
+	; LDA #$5d
+	; STA PPUADDR
+	; STX PPUDATA
 
-	LDA PPUSTATUS
-	LDA #$21
-	STA PPUADDR
-	LDA #$73
-	STA PPUADDR
-	STX PPUDATA
+	; LDA PPUSTATUS
+	; LDA #$21
+	; STA PPUADDR
+	; LDA #$73
+	; STA PPUADDR
+	; STX PPUDATA
 
-	LDA PPUSTATUS
-	LDA #$22
-	STA PPUADDR
-	LDA #$2f
-	STA PPUADDR
-	STX PPUDATA
+	; LDA PPUSTATUS
+	; LDA #$22
+	; STA PPUADDR
+	; LDA #$2f
+	; STA PPUADDR
+	; STX PPUDATA
 
-	LDA PPUSTATUS
-	LDA #$22
-	STA PPUADDR
-	LDA #$f7
-	STA PPUADDR
-	STX PPUDATA
+	; LDA PPUSTATUS
+	; LDA #$22
+	; STA PPUADDR
+	; LDA #$f7
+	; STA PPUADDR
+	; STX PPUDATA
 
-	; finally, small star 2
-	LDA PPUSTATUS
-	LDA #$20
-	STA PPUADDR
-	LDA #$f1
-	STA PPUADDR
-	LDX #$2e
-	STX PPUDATA
+	; ; finally, small star 2
+	; LDA PPUSTATUS
+	; LDA #$20
+	; STA PPUADDR
+	; LDA #$f1
+	; STA PPUADDR
+	; LDX #$2e
+	; STX PPUDATA
 
-	LDA PPUSTATUS
-	LDA #$21
-	STA PPUADDR
-	LDA #$a8
-	STA PPUADDR
-	STX PPUDATA
+	; LDA PPUSTATUS
+	; LDA #$21
+	; STA PPUADDR
+	; LDA #$a8
+	; STA PPUADDR
+	; STX PPUDATA
 
-	LDA PPUSTATUS
-	LDA #$22
-	STA PPUADDR
-	LDA #$7a
-	STA PPUADDR
-	STX PPUDATA
+	; LDA PPUSTATUS
+	; LDA #$22
+	; STA PPUADDR
+	; LDA #$7a
+	; STA PPUADDR
+	; STX PPUDATA
 
-	LDA PPUSTATUS
-	LDA #$23
-	STA PPUADDR
-	LDA #$44
-	STA PPUADDR
-	STX PPUDATA
+	; LDA PPUSTATUS
+	; LDA #$23
+	; STA PPUADDR
+	; LDA #$44
+	; STA PPUADDR
+	; STX PPUDATA
 
-	LDA PPUSTATUS
-	LDA #$23
-	STA PPUADDR
-	LDA #$7c
-	STA PPUADDR
-	STX PPUDATA
+	; LDA PPUSTATUS
+	; LDA #$23
+	; STA PPUADDR
+	; LDA #$7c
+	; STA PPUADDR
+	; STX PPUDATA
 
+	
 	; finally, attribute table
 	LDA PPUSTATUS
 	LDA #$23
@@ -243,16 +390,13 @@ palettes:
 .byte $0f, $19, $09, $29
 .byte $0f, $19, $09, $29
 
-
-sprites:
-.byte $70, $06, $00, $18
+sprites1:
+.byte $70, $05, $00, $10
+.byte $70, $06, $00, $18	
 .byte $78, $07, $00, $10
 .byte $78, $08, $00, $18
 
-sprites1:
-.byte $70, $06, $00, $88
-.byte $78, $07, $00, $80
-.byte $78, $08, $00, $88
+
 
 
 .segment "CHR"
