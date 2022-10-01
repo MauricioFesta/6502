@@ -23,163 +23,94 @@ LatchController:
 	STA $4016       ; tell both the controllers to latch buttons
 	
 
-ReadYandB: 
+ReadAandX: 
   LDA $4016       ; player 1 - A
   AND #%00000001 
-  BEQ ReadXandA ; branch to ReadADone if button is NOT pressed (0)
-  LDX #$00
-  
-	CLC
-	LDA $0203
-	ADC #$05
-	STA $0203
-	
-	LDA $0207
-	CLD
-	ADC #$05
-	STA $0207	
-
-	LDA $20B
-	CLD
-	ADC #$05
-	STA $20B
-
-	LDA $20F
-	CLD
-	ADC #$05
-	STA $20F
-
-ReadXandA: 
+  BEQ ReadBandY 
+ 
+ReadBandY: 
 	LDA $4016       ; player 1 - A
 	AND #%00000001  
-	BEQ ReadUp 
-	LDX #$00
+	BEQ ReadBack 
 	
-	LDA $0203
-	CLD
-	TAX
-	DEX
-	DEX
-	DEX
-	DEX
-	DEX
-	TXA
-	STA $0203
-	
-	LDA $0207
-	CLD
-	TAX
-	DEX
-	DEX
-	DEX
-	DEX
-	DEX
-	TXA
-	STA $0207	
-
-	LDA $20B
-	CLD
-	TAX
-	DEX
-	DEX
-	DEX
-	DEX
-	DEX
-	TXA
-	STA $20B
-
-	LDA $20F
-	CLD
-	TAX
-	DEX
-	DEX
-	DEX
-	DEX
-	DEX
-	TXA
-	STA $20F
-
-
-
-ReadUp: 
+ReadBack: 
   LDA $4016       ; player 1 - A
   AND #%00000001 
   BEQ ReadStart   
-  	; CLC
-	; LDA $0203
-	; ADC #$05
-	; STA $0203
-	
-	; LDA $0207
-	; CLD
-	; ADC #$05
-	; STA $0207	
-
-	; LDA $20B
-	; CLD
-	; ADC #$05
-	; STA $20B
-
-	; LDA $20F
-	; CLD
-	; ADC #$05
-	; STA $20F
-
+  
 
 ReadStart: 
   LDA $4016       ; player 1 - A
   AND #%00000001 
-  BEQ ReadXandADone   
-	CLC
-	LDA $0203
-	ADC #$05
+  BEQ ReadUp   
+
+  JMP reset_handler
+
+
+ReadUp: 
+  LDA $4016       ; player 1 - A
+  AND #%00000001
+  BEQ ReadDown  
+
+
+ReadDown: 
+  LDA $4016       ; player 1 - A
+  AND #%00000001
+  BEQ ReadLeft    
+
+ReadLeft: 
+  LDA $4016       ; player 1 - A
+  AND #%00000001
+  BEQ ReadRight 
+
+    LDA $0203
+	CLD
+	TAX
+	DEX
+	DEX
+	DEX
+	DEX
+	DEX
+	TXA
 	STA $0203
 	
 	LDA $0207
 	CLD
-	ADC #$05
+	TAX
+	DEX
+	DEX
+	DEX
+	DEX
+	DEX
+	TXA
 	STA $0207	
 
 	LDA $20B
 	CLD
-	ADC #$05
+	TAX
+	DEX
+	DEX
+	DEX
+	DEX
+	DEX
+	TXA
 	STA $20B
 
 	LDA $20F
 	CLD
-	ADC #$05
+	TAX
+	DEX
+	DEX
+	DEX
+	DEX
+	DEX
+	TXA
 	STA $20F
-
-
-; ReadLeft: 
-;   LDA $4016       ; player 1 - A
-;   AND #%00000001  ; only look at bit 0
-;   BEQ ReadRight   ; branch to ReadADone if button is NOT pressed (0)
-
-;   	CLC
-; 	LDA $0203
-; 	ADC #$05
-; 	STA $0203
-	
-; 	LDA $0207
-; 	CLD
-; 	ADC #$05
-; 	STA $0207	
-
-; 	LDA $20B
-; 	CLD
-; 	ADC #$05
-; 	STA $20B
-
-; 	LDA $20F
-; 	CLD
-; 	ADC #$05
-; 	STA $20F
 
 ReadRight: 
   LDA $4016       ; player 1 - A
-  AND #%00000001  ; only look at bit 0
-  BEQ ReadXandADone ; branch to ReadADone if button is NOT pressed (0)
+  AND #%00000001
+  BEQ ReadXandADone 
 
   	CLC
 	LDA $0203
@@ -200,6 +131,8 @@ ReadRight:
 	CLD
 	ADC #$05
 	STA $20F
+
+
 
 ReadXandADone:
 	RTI  
