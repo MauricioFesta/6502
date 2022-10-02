@@ -50,19 +50,110 @@ ReadUp:
   AND #%00000001
   BEQ ReadDown  
 
+  CLD
+  LDA $0200
+  TAX
+  DEX
+  DEX
+  DEX
+  DEX
+  DEX
+  TXA
+  STA $0200
+
+  CLD
+  LDA $0204
+  TAX
+  DEX
+  DEX
+  DEX
+  DEX
+  DEX
+  TXA
+  STA $0204
+
+  CLD
+  LDA $0208
+  TAX
+  DEX
+  DEX
+  DEX
+  DEX
+  DEX
+  TXA
+  STA $0208
+
+  CLD 
+  LDA $20c
+  TAX
+  DEX
+  DEX
+  DEX
+  DEX
+  DEX
+  TXA
+  STA $20c
+
 
 ReadDown: 
   LDA $4016       ; player 1 - A
   AND #%00000001
-  BEQ ReadLeft    
+  BEQ ReadLeft
 
+  CLD
+  LDA $0200 
+  TAX
+  INX
+  INX
+  INX
+  INX
+  INX
+  TXA
+  STA $0200
+
+  CLD
+  LDA $0204
+  TAX
+  INX
+  INX
+  INX
+  INX
+  INX
+  TXA
+  STA $0204
+
+  CLD
+  LDA $0208
+  TAX 
+  INX
+  INX
+  INX
+  INX
+  INX
+  TXA	
+  STA $0208
+
+  CLD
+  LDA $20c
+  TAX
+  INX
+  INX
+  INX
+  INX
+  INX
+  TXA
+  STA $20c
+
+  RTI
+
+ 
 ReadLeft: 
   LDA $4016       ; player 1 - A
   AND #%00000001
   BEQ ReadRight 
 
-    LDA $0203
 	CLD
+    LDA $0203
 	TAX
 	DEX
 	DEX
@@ -72,8 +163,8 @@ ReadLeft:
 	TXA
 	STA $0203
 	
-	LDA $0207
 	CLD
+	LDA $0207
 	TAX
 	DEX
 	DEX
@@ -83,8 +174,8 @@ ReadLeft:
 	TXA
 	STA $0207	
 
-	LDA $20B
 	CLD
+	LDA $20b
 	TAX
 	DEX
 	DEX
@@ -92,10 +183,10 @@ ReadLeft:
 	DEX
 	DEX
 	TXA
-	STA $20B
+	STA $20b
 
-	LDA $20F
 	CLD
+	LDA $20f
 	TAX
 	DEX
 	DEX
@@ -103,7 +194,7 @@ ReadLeft:
 	DEX
 	DEX
 	TXA
-	STA $20F
+	STA $20f
 
 ReadRight: 
   LDA $4016       ; player 1 - A
@@ -112,23 +203,47 @@ ReadRight:
 
   	CLC
 	LDA $0203
-	ADC #$05
+	TAX
+	INX
+	INX
+	INX
+	INX
+	INX
+	TXA
 	STA $0203
 	
-	LDA $0207
 	CLD
-	ADC #$05
+	LDA $0207
+	TAX
+	INX
+	INX
+	INX
+	INX
+	INX
+	TXA
 	STA $0207	
 
-	LDA $20B
 	CLD
-	ADC #$05
-	STA $20B
+	LDA $20b
+	TAX
+	INX
+	INX
+	INX
+	INX
+	INX
+	TXA
+	STA $20b
 
-	LDA $20F
 	CLD
-	ADC #$05
-	STA $20F
+	LDA $20f
+	TAX
+	INX
+	INX
+	INX
+	INX
+	INX
+	TXA
+	STA $20f
 
 
 
@@ -163,121 +278,121 @@ load_sprites:
 	BNE load_sprites
 	LDX #$00
 
+
+	; LDA $0204
+	; CLD
+	; ADC #$05
+	; STA $0204
+
+	; LDA $0208
+	; CLD
+	; ADC #$05
+	; STA $0208
+
+	; LDA $20c
+	; CLD
+	; ADC #$05
+	; STA $20c
+
 	; write nametables
 	; big stars first
-	;LDA PPUSTATUS
-	; LDA #$20
-	; STA PPUADDR
-	; LDA #$6b
-	; STA PPUADDR
-	; LDX #$2f
-	; STX PPUDATA
+	LDA #$20
+	STA PPUADDR
+	LDA #$4b
+	STA PPUADDR
+	LDX #$2f
+	STX PPUDATA
 
-	; LDA PPUSTATUS
-	; LDA #$21
-	; STA PPUADDR
-	; LDA #$59
-	; STA PPUADDR
-	; STX PPUDATA
+	LDA #$21
+	STA PPUADDR
+	LDA #$59
+	STA PPUADDR
+	STX PPUDATA
 
-	; LDA PPUSTATUS
-	; LDA #$22
-	; STA PPUADDR
-	; LDA #$23
-	; STA PPUADDR
-	; STX PPUDATA
+	LDA #$22
+	STA PPUADDR
+	LDA #$23
+	STA PPUADDR
+	STX PPUDATA
 
-	; LDA PPUSTATUS
-	; LDA #$23
-	; STA PPUADDR
-	; LDA #$52
-	; STA PPUADDR
-	; STX PPUDATA
+	LDA #$23
+	STA PPUADDR
+	LDA #$52
+	STA PPUADDR
+	STX PPUDATA
 
-	; ; next, small star 1
-	; LDA PPUSTATUS
-	; LDA #$20
-	; STA PPUADDR
-	; LDA #$74
-	; STA PPUADDR
-	; LDX #$2d
-	; STX PPUDATA
+	; next, small star 1
+	LDA #$20
+	STA PPUADDR
+	LDA #$74
+	STA PPUADDR
+	LDX #$2d
+	STX PPUDATA
 
-	; LDA PPUSTATUS
-	; LDA #$21
-	; STA PPUADDR
-	; LDA #$43
-	; STA PPUADDR
-	; STX PPUDATA
+	LDA #$21
+	STA PPUADDR
+	LDA #$43
+	STA PPUADDR
+	STX PPUDATA
 
-	; LDA PPUSTATUS
-	; LDA #$21
-	; STA PPUADDR
-	; LDA #$5d
-	; STA PPUADDR
-	; STX PPUDATA
+	LDA #$21
+	STA PPUADDR
+	LDA #$5d
+	STA PPUADDR
+	STX PPUDATA
 
-	; LDA PPUSTATUS
-	; LDA #$21
-	; STA PPUADDR
-	; LDA #$73
-	; STA PPUADDR
-	; STX PPUDATA
+	LDA #$21
+	STA PPUADDR
+	LDA #$73
+	STA PPUADDR
+	STX PPUDATA
 
-	; LDA PPUSTATUS
-	; LDA #$22
-	; STA PPUADDR
-	; LDA #$2f
-	; STA PPUADDR
-	; STX PPUDATA
+	LDA #$22
+	STA PPUADDR
+	LDA #$2f
+	STA PPUADDR
+	STX PPUDATA
 
-	; LDA PPUSTATUS
-	; LDA #$22
-	; STA PPUADDR
-	; LDA #$f7
-	; STA PPUADDR
-	; STX PPUDATA
+	LDA #$22
+	STA PPUADDR
+	LDA #$f7
+	STA PPUADDR
+	STX PPUDATA
 
-	; ; finally, small star 2
-	; LDA PPUSTATUS
-	; LDA #$20
-	; STA PPUADDR
-	; LDA #$f1
-	; STA PPUADDR
-	; LDX #$2e
-	; STX PPUDATA
+	; finally, small star 2
+	LDA #$20
+	STA PPUADDR
+	LDA #$f1
+	STA PPUADDR
+	LDX #$2e
+	STX PPUDATA
 
-	; LDA PPUSTATUS
-	; LDA #$21
-	; STA PPUADDR
-	; LDA #$a8
-	; STA PPUADDR
-	; STX PPUDATA
+	LDA #$21
+	STA PPUADDR
+	LDA #$a8
+	STA PPUADDR
+	STX PPUDATA
 
-	; LDA PPUSTATUS
-	; LDA #$22
-	; STA PPUADDR
-	; LDA #$7a
-	; STA PPUADDR
-	; STX PPUDATA
+	LDA #$22
+	STA PPUADDR
+	LDA #$7a
+	STA PPUADDR
+	STX PPUDATA
 
-	; LDA PPUSTATUS
-	; LDA #$23
-	; STA PPUADDR
-	; LDA #$44
-	; STA PPUADDR
-	; STX PPUDATA
+	LDA #$23
+	STA PPUADDR
+	LDA #$44
+	STA PPUADDR
+	STX PPUDATA
 
-	; LDA PPUSTATUS
-	; LDA #$23
-	; STA PPUADDR
-	; LDA #$7c
-	; STA PPUADDR
-	; STX PPUDATA
+	LDA #$23
+	STA PPUADDR
+	LDA #$7c
+	STA PPUADDR
+	STX PPUDATA
 
 	
 	; finally, attribute table
-	LDA PPUSTATUS
 	LDA #$23
 	STA PPUADDR
 	LDA #$c2
@@ -285,7 +400,6 @@ load_sprites:
 	LDA #%01000000
 	STA PPUDATA
 
-	LDA PPUSTATUS
 	LDA #$23
 	STA PPUADDR
 	LDA #$e0
