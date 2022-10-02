@@ -26,12 +26,18 @@ LatchController:
 ReadAandX: 
   LDA $4016       ; player 1 - A
   AND #%00000001 
-  BEQ ReadBandY 
+  BEQ ReadAandXDone
+  RTI 
  
+ReadAandXDone:
+
 ReadBandY: 
 	LDA $4016       ; player 1 - A
 	AND #%00000001  
-	BEQ ReadBack 
+	BEQ ReadBandYDone
+	RTI 
+
+ReadBandYDone:
 	
 ReadBack: 
   LDA $4016       ; player 1 - A
@@ -43,12 +49,15 @@ ReadBack:
 ReadStart: 
   LDA $4016       ; player 1 - A
   AND #%00000001 
-  BEQ ReadUp   
+  BEQ ReadStartDone 
+  RTI
+
+ReadStartDone:
 
 ReadUp: 
   LDA $4016       ; player 1 - A
   AND #%00000001
-  BEQ ReadDown  
+  BEQ ReadUpDone  
 
   CLD
   LDA $0200
@@ -94,11 +103,15 @@ ReadUp:
   TXA
   STA $20c
 
+  RTI
+
+
+ReadUpDone:
 
 ReadDown: 
   LDA $4016       ; player 1 - A
   AND #%00000001
-  BEQ ReadLeft
+  BEQ ReadDownDone
 
   CLD
   LDA $0200 
@@ -146,11 +159,13 @@ ReadDown:
 
   RTI
 
+ReadDownDone:
+
  
 ReadLeft: 
   LDA $4016       ; player 1 - A
   AND #%00000001
-  BEQ ReadRight 
+  BEQ ReadLeftDone 
 
 	CLD
     LDA $0203
@@ -196,10 +211,17 @@ ReadLeft:
 	TXA
 	STA $20f
 
+	RTI
+
+
+
+ReadLeftDone:
+	
+
 ReadRight: 
   LDA $4016       ; player 1 - A
   AND #%00000001
-  BEQ ReadXandADone 
+  BEQ ReadRigthDone 
 
   	CLC
 	LDA $0203
@@ -245,9 +267,11 @@ ReadRight:
 	TXA
 	STA $20f
 
+	RTI
 
 
-ReadXandADone:
+
+ReadRigthDone:
 	RTI  
 
 .endproc
