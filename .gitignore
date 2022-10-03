@@ -1,2 +1,9 @@
-src/game.o
+src/spaceship.o
 src/reset.o
+src/read_right.o
+src/read_left.o
+src/read_ax.o
+src/read_by.o
+src/read_down.o
+src/read_start.o
+src/read_up.o

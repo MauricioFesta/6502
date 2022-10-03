@@ -6,6 +6,15 @@
   RTI
 .endproc
 
+
+.import read_right
+.import read_left
+.import read_down
+.import read_ax
+.import read_by
+.import read_up
+.import read_start
+
 .proc nmi_handler
 
   	LDA #$00
@@ -27,15 +36,15 @@ ReadAandX:
   LDA $4016       ; player 1 - A
   AND #%00000001 
   BEQ ReadAandXDone
-  RTI 
- 
-ReadAandXDone:
+  LDX #$00
+  JMP read_ax
+ ReadAandXDone:
 
 ReadBandY: 
 	LDA $4016       ; player 1 - A
 	AND #%00000001  
 	BEQ ReadBandYDone
-	RTI 
+	JMP read_by
 
 ReadBandYDone:
 	
@@ -50,7 +59,7 @@ ReadStart:
   LDA $4016       ; player 1 - A
   AND #%00000001 
   BEQ ReadStartDone 
-  RTI
+  JMP read_start
 
 ReadStartDone:
 
@@ -58,53 +67,7 @@ ReadUp:
   LDA $4016       ; player 1 - A
   AND #%00000001
   BEQ ReadUpDone  
-
-  CLD
-  LDA $0200
-  TAX
-  DEX
-  DEX
-  DEX
-  DEX
-  DEX
-  TXA
-  STA $0200
-
-  CLD
-  LDA $0204
-  TAX
-  DEX
-  DEX
-  DEX
-  DEX
-  DEX
-  TXA
-  STA $0204
-
-  CLD
-  LDA $0208
-  TAX
-  DEX
-  DEX
-  DEX
-  DEX
-  DEX
-  TXA
-  STA $0208
-
-  CLD 
-  LDA $20c
-  TAX
-  DEX
-  DEX
-  DEX
-  DEX
-  DEX
-  TXA
-  STA $20c
-
-  RTI
-
+  JMP read_up
 
 ReadUpDone:
 
@@ -112,52 +75,7 @@ ReadDown:
   LDA $4016       ; player 1 - A
   AND #%00000001
   BEQ ReadDownDone
-
-  CLD
-  LDA $0200 
-  TAX
-  INX
-  INX
-  INX
-  INX
-  INX
-  TXA
-  STA $0200
-
-  CLD
-  LDA $0204
-  TAX
-  INX
-  INX
-  INX
-  INX
-  INX
-  TXA
-  STA $0204
-
-  CLD
-  LDA $0208
-  TAX 
-  INX
-  INX
-  INX
-  INX
-  INX
-  TXA	
-  STA $0208
-
-  CLD
-  LDA $20c
-  TAX
-  INX
-  INX
-  INX
-  INX
-  INX
-  TXA
-  STA $20c
-
-  RTI
+  JMP read_down
 
 ReadDownDone:
 
@@ -166,55 +84,8 @@ ReadLeft:
   LDA $4016       ; player 1 - A
   AND #%00000001
   BEQ ReadLeftDone 
-
-	CLD
-    LDA $0203
-	TAX
-	DEX
-	DEX
-	DEX
-	DEX
-	DEX
-	TXA
-	STA $0203
+  JMP read_left
 	
-	CLD
-	LDA $0207
-	TAX
-	DEX
-	DEX
-	DEX
-	DEX
-	DEX
-	TXA
-	STA $0207	
-
-	CLD
-	LDA $20b
-	TAX
-	DEX
-	DEX
-	DEX
-	DEX
-	DEX
-	TXA
-	STA $20b
-
-	CLD
-	LDA $20f
-	TAX
-	DEX
-	DEX
-	DEX
-	DEX
-	DEX
-	TXA
-	STA $20f
-
-	RTI
-
-
-
 ReadLeftDone:
 	
 
@@ -222,55 +93,8 @@ ReadRight:
   LDA $4016       ; player 1 - A
   AND #%00000001
   BEQ ReadRigthDone 
-
-  	CLC
-	LDA $0203
-	TAX
-	INX
-	INX
-	INX
-	INX
-	INX
-	TXA
-	STA $0203
-	
-	CLD
-	LDA $0207
-	TAX
-	INX
-	INX
-	INX
-	INX
-	INX
-	TXA
-	STA $0207	
-
-	CLD
-	LDA $20b
-	TAX
-	INX
-	INX
-	INX
-	INX
-	INX
-	TXA
-	STA $20b
-
-	CLD
-	LDA $20f
-	TAX
-	INX
-	INX
-	INX
-	INX
-	INX
-	TXA
-	STA $20f
-
-	RTI
-
-
-
+  JMP read_right
+ 
 ReadRigthDone:
 	RTI  
 
@@ -295,13 +119,12 @@ load_palettes:
   LDX #$00
  
 load_sprites:
-	LDA sprites1,X
+	LDA sprites_ship,X
 	STA $0200,X
 	CPX #$10
 	INX
 	BNE load_sprites
 	LDX #$00
-
 
 	; LDA $0204
 	; CLD
@@ -448,6 +271,10 @@ forever:
 .addr nmi_handler, reset_handler, irq_handler
 
 .segment "RODATA"
+
+
+ammunition:
+.byte $70, $09, $00, 80
 palettes:
 .byte $0f, $12, $23, $27
 .byte $0f, $2b, $3c, $39
@@ -459,12 +286,11 @@ palettes:
 .byte $0f, $19, $09, $29
 .byte $0f, $19, $09, $29
 
-sprites1:
+sprites_ship:
 .byte $70, $05, $00, $10
 .byte $70, $06, $00, $18	
 .byte $78, $07, $00, $10
 .byte $78, $08, $00, $18
-
 
 
 
