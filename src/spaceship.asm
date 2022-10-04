@@ -14,6 +14,7 @@
 .import read_by
 .import read_up
 .import read_start
+.import background_tiles
 
 .proc nmi_handler
 
@@ -126,142 +127,16 @@ load_sprites:
 	BNE load_sprites
 	LDX #$00
 
-	; LDA $0204
-	; CLD
-	; ADC #$05
-	; STA $0204
+	JSR background_tiles
 
-	; LDA $0208
-	; CLD
-	; ADC #$05
-	; STA $0208
+	vblankwait:       ; wait for another vblank before continuing
+	BIT PPUSTATUS
+	BPL vblankwait
 
-	; LDA $20c
-	; CLD
-	; ADC #$05
-	; STA $20c
-
-	; write nametables
-	; big stars first
-	LDA #$20
-	STA PPUADDR
-	LDA #$4b
-	STA PPUADDR
-	LDX #$2f
-	STX PPUDATA
-
-	LDA #$21
-	STA PPUADDR
-	LDA #$59
-	STA PPUADDR
-	STX PPUDATA
-
-	LDA #$22
-	STA PPUADDR
-	LDA #$23
-	STA PPUADDR
-	STX PPUDATA
-
-	LDA #$23
-	STA PPUADDR
-	LDA #$52
-	STA PPUADDR
-	STX PPUDATA
-
-	; next, small star 1
-	LDA #$20
-	STA PPUADDR
-	LDA #$74
-	STA PPUADDR
-	LDX #$2d
-	STX PPUDATA
-
-	LDA #$21
-	STA PPUADDR
-	LDA #$43
-	STA PPUADDR
-	STX PPUDATA
-
-	LDA #$21
-	STA PPUADDR
-	LDA #$5d
-	STA PPUADDR
-	STX PPUDATA
-
-	LDA #$21
-	STA PPUADDR
-	LDA #$73
-	STA PPUADDR
-	STX PPUDATA
-
-	LDA #$22
-	STA PPUADDR
-	LDA #$2f
-	STA PPUADDR
-	STX PPUDATA
-
-	LDA #$22
-	STA PPUADDR
-	LDA #$f7
-	STA PPUADDR
-	STX PPUDATA
-
-	; finally, small star 2
-	LDA #$20
-	STA PPUADDR
-	LDA #$f1
-	STA PPUADDR
-	LDX #$2e
-	STX PPUDATA
-
-	LDA #$21
-	STA PPUADDR
-	LDA #$a8
-	STA PPUADDR
-	STX PPUDATA
-
-	LDA #$22
-	STA PPUADDR
-	LDA #$7a
-	STA PPUADDR
-	STX PPUDATA
-
-	LDA #$23
-	STA PPUADDR
-	LDA #$44
-	STA PPUADDR
-	STX PPUDATA
-
-	LDA #$23
-	STA PPUADDR
-	LDA #$7c
-	STA PPUADDR
-	STX PPUDATA
-
-	
-	; finally, attribute table
-	LDA #$23
-	STA PPUADDR
-	LDA #$c2
-	STA PPUADDR
-	LDA #%01000000
-	STA PPUDATA
-
-	LDA #$23
-	STA PPUADDR
-	LDA #$e0
-	STA PPUADDR
-	LDA #%00001100
-	STA PPUDATA
-
-vblankwait:       ; wait for another vblank before continuing
-  BIT PPUSTATUS
-  BPL vblankwait
-
-  LDA #%10010000  ; turn on NMIs, sprites use first pattern table
-  STA PPUCTRL
-  LDA #%00011110  ; turn on screen
-  STA PPUMASK
+	LDA #%10010000  ; turn on NMIs, sprites use first pattern table
+	STA PPUCTRL
+	LDA #%00011110  ; turn on screen
+	STA PPUMASK
 
 forever:
   JMP forever
@@ -272,9 +147,6 @@ forever:
 
 .segment "RODATA"
 
-
-ammunition:
-.byte $70, $09, $00, 80
 palettes:
 .byte $0f, $12, $23, $27
 .byte $0f, $2b, $3c, $39

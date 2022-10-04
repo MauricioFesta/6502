@@ -7,5 +7,6 @@ ca65 src/read_by.asm
 ca65 src/read_down.asm
 ca65 src/read_start.asm
 ca65 src/read_up.asm
+ca65 src/background_tiles.asm
 
-ld65 src/reset.o src/read_ax.o src/read_by.o src/read_down.o src/read_start.o src/read_up.o src/read_right.o src/read_left.o src/spaceship.o -C nes.cfg -o spaceship.nes
+ld65 src/reset.o src/background_tiles.o src/read_ax.o src/read_by.o src/read_down.o src/read_start.o src/read_up.o src/read_right.o src/read_left.o src/spaceship.o -C nes.cfg -o spaceship.nes
