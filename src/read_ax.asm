@@ -4,18 +4,21 @@
 .export read_ax
 
 .proc read_ax
-    drawShip:
-    LDA ammunition,X
-    STA $0212,X
-    CPX #$04
-    INX
-    BNE drawShip
 
+load_ammu:
+    LDA sprites_ammunition,X
+    STA $0248,X
+    INX
+    CPX #$04
+    BNE load_ammu
+    
     RTI 
 
 .endproc
 
-.segment "RODATA"
+sprites_ammunition:
+  .byte $90, $09, $00, $80
+    
 
-ammunition:
-.byte $70, $09, $00, $80
+
+

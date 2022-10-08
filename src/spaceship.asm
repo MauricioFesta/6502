@@ -18,10 +18,10 @@
 
 .proc nmi_handler
 
-  	LDA #$00
-  	STA OAMADDR
-  	LDA #$02
-  	STA OAMDMA
+  LDA #$00
+  STA OAMADDR
+  LDA #$02
+  STA OAMDMA
 	LDA #$00
 	STA $2005
 	STA $2005
@@ -119,12 +119,12 @@ load_palettes:
   BNE load_palettes
   LDX #$00
  
-load_sprites:
+load_ship:
 	LDA sprites_ship,X
 	STA $0200,X
+  INX
 	CPX #$10
-	INX
-	BNE load_sprites
+	BNE load_ship
 	LDX #$00
 
 	JSR background_tiles
@@ -148,22 +148,22 @@ forever:
 .segment "RODATA"
 
 palettes:
-.byte $0f, $12, $23, $27
-.byte $0f, $2b, $3c, $39
-.byte $0f, $0c, $07, $13
-.byte $0f, $19, $09, $29
+  .byte $0f, $12, $23, $27
+  .byte $0f, $2b, $3c, $39
+  .byte $0f, $0c, $07, $13
+  .byte $0f, $19, $09, $29
 
-.byte $0f, $2d, $10, $15
-.byte $0f, $19, $09, $29
-.byte $0f, $19, $09, $29
-.byte $0f, $19, $09, $29
+  .byte $0f, $2d, $10, $15
+  .byte $0f, $19, $09, $29
+  .byte $0f, $19, $09, $29
+  .byte $0f, $19, $09, $29
+
 
 sprites_ship:
-.byte $70, $05, $00, $10
-.byte $70, $06, $00, $18	
-.byte $78, $07, $00, $10
-.byte $78, $08, $00, $18
-
+  .byte $70, $05, $00, $10
+  .byte $70, $06, $00, $18	
+  .byte $78, $07, $00, $10
+  .byte $78, $08, $00, $18
 
 
 .segment "CHR"
