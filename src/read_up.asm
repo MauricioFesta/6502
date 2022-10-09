@@ -5,7 +5,7 @@
 
 .proc read_up
 
-  CLD
+  CLD ;start movm ship up
   LDA $0200
   TAX
   DEX
@@ -47,7 +47,7 @@
   DEX
   DEX
   TXA
-  STA $20c
+  STA $20c ;end mov ship up
 
   RTI
 

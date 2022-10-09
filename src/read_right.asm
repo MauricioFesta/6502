@@ -3,7 +3,7 @@
 .export read_right
 .proc read_right
 
- 	CLC
+ 	CLC ;start mov ship rigth
 	LDA $0203
 	TAX
 	INX
@@ -45,7 +45,7 @@
 	INX
 	INX
 	TXA
-	STA $20f
+	STA $20f ;end mov ship right
 
     RTI
 

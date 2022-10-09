@@ -5,7 +5,7 @@
 
 .proc read_left
 
-    CLD
+    CLD  ;start moc ship left
     LDA $0203
 	TAX
 	DEX
@@ -47,7 +47,7 @@
 	DEX
 	DEX
 	TXA
-	STA $20f
+	STA $20f ;end mov ship left
 
 	RTI
 

@@ -4,7 +4,7 @@
 
 .proc read_down
 
-  CLD
+  CLD   ;start mov ship down
   LDA $0200 
   TAX
   INX
@@ -46,7 +46,7 @@
   INX
   INX
   TXA
-  STA $20c
+  STA $20c ;end mov ship down
 
   RTI
 

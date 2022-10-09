@@ -119,12 +119,12 @@ load_palettes:
   BNE load_palettes
   LDX #$00
  
-load_ship:
+load_ship: ;start draw ship
 	LDA sprites_ship,X
 	STA $0200,X
   INX
 	CPX #$10
-	BNE load_ship
+	BNE load_ship ;end draw ship
 	LDX #$00
 
 	JSR background_tiles
