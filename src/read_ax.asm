@@ -41,8 +41,18 @@ delayloop:  ;start delay loop
     CLC ;end delay
 
     INX
-    CPX #$4
+    CPX #$f
     BNE up_shot
+
+    LDX $00
+draw_invalid:  ;start draw blank sprit
+
+    LDA sprites_invalid, X
+    STA $0210,X
+    INX
+    CPX #$04
+    BNE draw_invalid ;end draw blank sprit
+        
 
     RTI
 
@@ -51,6 +61,9 @@ delayloop:  ;start delay loop
 
 sprites_ammunition:
   .byte $80, $09, $00, $80
+
+sprites_invalid:
+    .byte $00, $00, $00, $00
     
 
 
