@@ -8,3 +8,4 @@ src/read_down.o
 src/read_start.o
 src/read_up.o
 src/background_tiles.o
+src/ship_enemies.o

@@ -1,4 +1,3 @@
-.include "constants.inc"
 .segment "CODE"
 .import main
 .export read_ax
@@ -39,9 +38,9 @@ delayloop:  ;start delay loop
     INC $41
     BNE delayloop
     CLC ;end delay
-
+    LDA #$00
     INX
-    CPX #$f
+    CPX #$018
     BNE up_shot
 
     LDX $00
@@ -60,10 +59,10 @@ draw_invalid:  ;start draw blank sprit
 .endproc
 
 sprites_ammunition:
-  .byte $80, $09, $00, $80
+  .byte $80, $0a, $00, $80
 
 sprites_invalid:
-    .byte $00, $00, $00, $00
+    .byte $00, $01, $00, $00
     
 
 

@@ -15,6 +15,7 @@
 .import read_up
 .import read_start
 .import background_tiles
+.import ship_enemies
 
 .proc nmi_handler
 
@@ -125,10 +126,9 @@ load_ship: ;start draw ship
   INX
 	CPX #$10
 	BNE load_ship ;end draw ship
-	LDX #$00
 
 	JSR background_tiles
-
+ 
 	vblankwait:       ; wait for another vblank before continuing
 	BIT PPUSTATUS
 	BPL vblankwait
@@ -164,7 +164,6 @@ sprites_ship:
   .byte $70, $06, $00, $18	
   .byte $78, $07, $00, $10
   .byte $78, $08, $00, $18
-
 
 .segment "CHR"
 .incbin "graphics.chr"
