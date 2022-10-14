@@ -9,7 +9,7 @@
 draw_enemies:
 
     LDA sprites_enemies,X
-    STA $0220,X 
+    STA $0214,X 
     INX
     CPX #$04
     BNE draw_enemies
@@ -19,6 +19,6 @@ draw_enemies:
 
 .endproc
 
-
+ 
 sprites_enemies:
     .byte $50, $00, $00, $18
