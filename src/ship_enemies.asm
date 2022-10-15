@@ -6,13 +6,13 @@
 
     LDX #$00
 
-draw_enemies:
+draw_enemie_one:
 
     LDA sprites_enemies,X
     STA $0214,X 
     INX
     CPX #$04
-    BNE draw_enemies
+    BNE draw_enemie_one
 
     RTS
 

@@ -41,36 +41,35 @@ delayloop:  ;start delay loop
     INX  
     CPX #$95
     BNE hit ;end move missile
-
-    LDX $00
+    
 draw_invalid:  ;start draw blank sprit
 
-    LDA sprites_invalid, X
-    STA $0210,X
-    INX
-    CPX #$04
-    BNE draw_invalid ;end draw blank sprit
+    LDA #$01
+    STA $0211 ;end draw blank sprit
         
     RTI
 
 hit:
-
-    LDY $10
-    LDA $0210
+    LDA $0210 ;start verify if the missile hit in the ship
     CLC
     SBC $0214
-    CMP #$00
+    CMP #$06
     BNE up_missile
     LDA $0213
     CLC
     SBC $0217
+    CLC
     CMP #$00
-    ;EOR #$01
-    ;EOR #$02
-    BNE up_missile
-   
-    JMP reset_handler
-  
+    BNE up_missile ;end verify
+
+    JMP draw_explosion
+ 
+draw_explosion: ;start draw explosion
+
+    LDA #$0b
+    STA $0215 ;end draw explosion
+    JMP draw_invalid 
+
 .endproc
 
 sprites_missile:
@@ -78,6 +77,9 @@ sprites_missile:
 
 sprites_invalid:
     .byte $00, $01, $00, $00
+
+sprites_explosion:
+    .byte $80, $0b, $00, $80
     
 
 
