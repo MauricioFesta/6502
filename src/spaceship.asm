@@ -16,6 +16,8 @@
 .import read_start
 .import background_tiles
 .import ship_enemies
+.import move_enemies
+.import background_scroll
 
 .proc nmi_handler
 
@@ -27,15 +29,22 @@
 	STA $2005
 	STA $2005
 
+
+
+  JSR background_scroll
+
+  JSR move_enemies
+  
 LatchController:
 	LDA #$01
 	STA $4016
 	LDA #$00
-	STA $4016       ; tell both the controllers to latch buttons
-	
+	STA $4016 ;tell both the controllers to latch buttons
+
+
 
 ReadAandX: 
-  LDA $4016       ; player 1 - A
+  LDA $4016 ;player 1 - A
   AND #%00000001 
   BEQ ReadAandXDone
   LDX #$00
@@ -43,7 +52,7 @@ ReadAandX:
  ReadAandXDone:
 
 ReadBandY: 
-	LDA $4016       ; player 1 - A
+	LDA $4016    ;player 1 - A
 	AND #%00000001  
 	BEQ ReadBandYDone
 	JMP read_by
@@ -98,7 +107,9 @@ ReadRight:
   JMP read_right
  
 ReadRigthDone:
+
 	RTI  
+
 
 .endproc
 
@@ -112,6 +123,8 @@ ReadRigthDone:
   STX PPUADDR
   LDX #$00
   STX PPUADDR
+  LDA #240
+  STA $0300
 load_palettes:
   LDA palettes,X
   STA PPUDATA
@@ -119,6 +132,7 @@ load_palettes:
   CPX #$20
   BNE load_palettes
   LDX #$00
+
  
 load_ship: ;start draw ship
 	LDA sprites_ship,X
@@ -153,7 +167,7 @@ palettes:
   .byte $0f, $0c, $07, $13
   .byte $0f, $19, $09, $29
 
-  .byte $0f, $2d, $10, $15
+  .byte $0f, $2d, $10, $05
   .byte $0f, $19, $09, $29
   .byte $0f, $19, $09, $29
   .byte $0f, $19, $09, $29

@@ -2,6 +2,7 @@
 .segment "CODE"
 .import main
 .export background_tiles
+.export background_scroll
 
 .proc background_tiles
 
@@ -120,5 +121,28 @@
 
 	RTS
 
+
+.endproc
+
+
+.proc background_scroll
+
+	LDA #$00 ;start scroll
+	STA PPUSCROLL 
+	CLD
+	DEC $0300
+	LDA $0300
+	CMP #$00
+	BEQ reset_scroll
+	STA PPUSCROLL ;end scroll
+	STA $0300
+	RTS
+
+reset_scroll:
+
+  LDA #239
+  STA PPUSCROLL
+  STA $0300
+  RTS
 
 .endproc

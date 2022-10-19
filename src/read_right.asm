@@ -47,6 +47,10 @@
 	TXA
 	STA $20f ;end mov ship right
 
+
+	;LDA $0213 ;update enemy
+	;STA $0214 ;update 
+
     RTI
 
 

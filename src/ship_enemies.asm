@@ -1,6 +1,7 @@
 .segment "CODE"
 .import main
 .export ship_enemies
+.export move_enemies
 
 .proc ship_enemies
 
@@ -19,6 +20,19 @@ draw_enemie_one:
 
 .endproc
 
+
+.proc move_enemies
+
+  ;LDA $0203
+  ;STA $0217
+  LDA $0214  ;move enemie
+  CLD
+  ADC #$01
+  STA $0214
+
+  RTS
+
+.endproc
  
 sprites_enemies:
-    .byte $50, $00, $00, $18
+    .byte $01, $00, $00, $18

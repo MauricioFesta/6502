@@ -36,12 +36,12 @@ delayloop:  ;start delay loop
     BNE delayloop
     CLC
     INC $41
-    BNE delayloop
-    CLC ;end delay
+    BNE delayloop ;end delay
+    CLC
     INX  
     CPX #$95
     BNE hit ;end move missile
-    
+
 draw_invalid:  ;start draw blank sprit
 
     LDA #$01
