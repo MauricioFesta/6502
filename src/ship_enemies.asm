@@ -48,18 +48,24 @@ draw_enemie_three: ;start draw ship three
     ;LDA $0203
     ;STA $0217
     LDA $0214  ;start move enemie 1
-    CLD
-    ADC #$01
+    TAX
+    INX
+    INX
+    TXA
     STA $0214 ;end move enemie 1
 
     LDA $0218  ;start move enemie 2
-    CLD
-    ADC #$02
+    TAX
+    INX
+    INX
+    TXA
     STA $0218 ;end move enemie 2
 
     LDA $021c  ;start move enemie 3
-    CLD
-    ADC #$02
+    TAX
+    INX
+    INX 
+    TXA
     STA $021c ;end move enemie 3
 
     RTS
