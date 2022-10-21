@@ -6,7 +6,6 @@
 
 .proc read_by
 
-
     JSR ship_enemies
 
     RTI

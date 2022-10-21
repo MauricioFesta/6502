@@ -3,10 +3,12 @@
 .export ship_enemies
 .export move_enemies
 
+
 .proc ship_enemies
 
     LDX #$00
 
+   
 draw_enemie_one:
 
     LDA sprites_enemies,X
@@ -35,4 +37,4 @@ draw_enemie_one:
 .endproc
  
 sprites_enemies:
-    .byte $01, $00, $00, $18
+    .byte $01, $0c, $00, $18

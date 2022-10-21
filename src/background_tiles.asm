@@ -5,10 +5,8 @@
 .export background_scroll
 
 .proc background_tiles
-
-; write nametables
-	; big stars first
-	LDA #$20
+	
+	LDA #$20 ;big stars first
 	STA PPUADDR
 	LDA #$4b
 	STA PPUADDR
@@ -31,10 +29,10 @@
 	STA PPUADDR
 	LDA #$52
 	STA PPUADDR
-	STX PPUDATA
+	STX PPUDATA ;end big star
 
-	; next, small star 1
-	LDA #$20
+	
+	LDA #$20  ;start small star 1
 	STA PPUADDR
 	LDA #$74
 	STA PPUADDR
@@ -69,10 +67,10 @@
 	STA PPUADDR
 	LDA #$f7
 	STA PPUADDR
-	STX PPUDATA
+	STX PPUDATA ;end small star 1
 
-	; finally, small star 2
-	LDA #$20
+	
+	LDA #$20 ;start small star 2
 	STA PPUADDR
 	LDA #$f1
 	STA PPUADDR
@@ -101,8 +99,7 @@
 	STA PPUADDR
 	LDA #$7c
 	STA PPUADDR
-	STX PPUDATA
-
+	STX PPUDATA ;end small star 2
 	
 	; finally, attribute table
 	LDA #$23
@@ -127,6 +124,17 @@
 
 .proc background_scroll
 
+	; LDA PPUSTATUS
+	; LDA #$20 ;start number
+	; STA PPUADDR
+	; LDA PPUADDR
+	; CLD
+	; ADC #$01
+	; STA PPUADDR
+	; LDX #$1f
+	; STX PPUDATA ;end number
+
+
 	LDA #$00 ;start scroll
 	STA PPUSCROLL 
 	CLD
@@ -136,7 +144,10 @@
 	BEQ reset_scroll
 	STA PPUSCROLL ;end scroll
 	STA $0300
+
+
 	RTS
+
 
 reset_scroll:
 

@@ -29,10 +29,7 @@
 	STA $2005
 	STA $2005
 
-
-
   JSR background_scroll
-
   JSR move_enemies
   
 LatchController:
