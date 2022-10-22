@@ -120,8 +120,16 @@ ReadRigthDone:
   STX PPUADDR
   LDX #$00
   STX PPUADDR
-  LDA #240
-  STA $0300
+
+  LDA #240 ;scroll size
+  STA $0300 ;end scroll size
+
+  LDA #$02 ;first ship enemie
+  STA $0301
+  LDA #$10
+  STA $0302 ;end first ship enemie
+
+
 load_palettes:
   LDA palettes,X
   STA PPUDATA

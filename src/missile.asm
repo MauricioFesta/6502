@@ -36,12 +36,12 @@ move_missile_one:
     SBC #$01
     TAX
     STA $0210
-    
+
     JSR delay
 
     INX  
     CPX #$95
-    BNE hit ;end move missile
+    BNE hit_ship_one ;end move missile
 
 
 draw_invalid:  ;start draw blank sprit
@@ -51,7 +51,7 @@ draw_invalid:  ;start draw blank sprit
         
     RTS
 
-hit:
+hit_ship_one:
     
     LDA $0210 ;start verify if the missile hit in the ship one
     CLC
@@ -63,6 +63,8 @@ hit:
     SBC $0217
     CMP #$00
     BEQ draw_explosion ;end verify
+
+
 
     ; LDA $0210; start verify if the missile hit in the ship two
     ; CLC
