@@ -1,4 +1,4 @@
-# spaceship
+# spaceship assembly 6502
 
 ## 10% Not finished yet
 
