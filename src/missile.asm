@@ -1,6 +1,7 @@
 
 .segment "CODE"
 .import main
+.import delay
 .export missile_one 
 
 
@@ -28,21 +29,16 @@ load_missile_one:
     LDX #$00
 
 
-move_missile:
+move_missile_one:
 
     CLD ;start move missile
     LDA $0210
     SBC #$01
     TAX
     STA $0210
+    
+    JSR delay
 
-delayloop:  ;start delay loop
-    ADC #08
-    BNE delayloop
-    CLC
-    INC $41
-    BNE delayloop ;end delay
-    CLC
     INX  
     CPX #$95
     BNE hit ;end move missile
@@ -57,18 +53,28 @@ draw_invalid:  ;start draw blank sprit
 
 hit:
     
-    LDA $0210 ;start verify if the missile hit in the ship
+    LDA $0210 ;start verify if the missile hit in the ship one
     CLC
     SBC $0214
     CMP #$06
-    BNE move_missile
+    BNE move_missile_one
     LDA $0213
     CLC
     SBC $0217
     CMP #$00
-    BNE move_missile ;end verify
+    BEQ draw_explosion ;end verify
 
-    JMP draw_explosion
+    ; LDA $0210; start verify if the missile hit in the ship two
+    ; CLC
+    ; SBC $0218
+    ; CMP #$06
+    ; BNE move_missile_one
+    ; LDA $0213
+    ; CLD 
+    ; SBC $021b
+    ; CMP #$00
+    ; BEQ draw_explosion
+    ; JMP move_missile_one
  
 draw_explosion: ;start draw explosion
 
