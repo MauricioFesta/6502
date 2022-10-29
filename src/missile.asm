@@ -30,59 +30,58 @@ load_missile_one:
 
 
 move_missile_one:
-
+     
     CLD ;start move missile
     LDA $0210
     SBC #$01
-    TAX
     STA $0210
 
     JSR delay
-
-    INX  
+    
+    INX 
     CPX #$95
-    BNE hit_ship_one ;end move missile
+    BNE valid_hit_y ;end move missile
+    LDX #$00
 
 
 draw_invalid:  ;start draw blank sprit
 
     LDA #$01
     STA $0211 ;end draw blank sprit
+    LDX #$00
         
     RTS
 
-hit_ship_one:
-    
-    LDA $0210 ;start verify if the missile hit in the ship one
+valid_hit_y: ;start valitadion Y | and x ___
+    INY
+    INY
+    INY
+    INY
+    LDA $0210
     CLC
-    SBC $0214
+    SBC $0210,Y
     CMP #$06
-    BNE move_missile_one
+    BEQ valid_hit_x
+    CPY $0303
+    BNE valid_hit_y
+    JMP move_missile_one
+
+valid_hit_x:
     LDA $0213
     CLC
-    SBC $0217
+    SBC $0213,Y
     CMP #$00
-    BEQ draw_explosion ;end verify
-
-
-
-    ; LDA $0210; start verify if the missile hit in the ship two
-    ; CLC
-    ; SBC $0218
-    ; CMP #$06
-    ; BNE move_missile_one
-    ; LDA $0213
-    ; CLD 
-    ; SBC $021b
-    ; CMP #$00
-    ; BEQ draw_explosion
-    ; JMP move_missile_one
- 
+    BEQ draw_explosion  
+    CPY $0303
+    BNE valid_hit_y
+    JMP move_missile_one ;end validation y | ans x ___
+    
+   
 draw_explosion: ;start draw explosion
 
     LDA #$0b
-    STA $0215 ;end draw explosion
-    JMP draw_invalid 
+    STA $0211,Y
+    JMP draw_invalid  ;end draw explosion
 
 
 .endproc

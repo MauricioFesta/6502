@@ -54,8 +54,8 @@ move_enemies_loop:
  
 sprites_enemies:
     .byte $01, $0c, $00, $18
-    .byte $50, $0c, $00, $40 
-    .byte $60, $0c, $00, $80
-    .byte $33, $0c, $00, $25
-    .byte $22, $0c, $00, $70
+    .byte $50, $0c, $00, $36 
+    .byte $60, $0c, $00, $68
+    .byte $33, $0c, $00, $77
+    .byte $22, $0c, $00, $37
 

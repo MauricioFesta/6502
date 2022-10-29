@@ -30,7 +30,7 @@
 	STA $2005
 
   JSR background_scroll
-  JSR move_enemies
+  ;JSR move_enemies
   
 LatchController:
 	LDA #$01
