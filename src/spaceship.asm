@@ -124,10 +124,8 @@ ReadRigthDone:
   LDA #240 ;scroll size
   STA $0300 ;end scroll size
 
-  LDA #$02 ;first ship enemie
-  STA $0301
-  LDA #$10
-  STA $0302 ;end first ship enemie
+  LDA #$10   ;size enemie ship
+  STA $0303 ;end size enemie ship
 
 
 load_palettes:
