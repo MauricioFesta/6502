@@ -2,6 +2,7 @@
 .segment "CODE"
 .import main
 .import delay
+.import ship_enemies
 .export missile_one 
 
 
@@ -48,7 +49,7 @@ draw_invalid:  ;start draw blank sprit
 
     LDA #$01
     STA $0211 ;end draw blank sprit
-    LDX #$00
+    LDX #$04
         
     RTS
 
@@ -81,7 +82,24 @@ draw_explosion: ;start draw explosion
 
     LDA #$0b
     STA $0211,Y
+    LDA $0304 ;validate if you already hit all ship
+    TAX
+    DEX
+    TXA
+    STA $0304
+    CPX #$00
+    BEQ player_win ;end validate
     JMP draw_invalid  ;end draw explosion
+
+
+player_win: 
+
+    LDA #$08 
+    STA $0303
+    LDA #$02
+    STA $0304
+    JSR ship_enemies
+    RTS
 
 
 .endproc
