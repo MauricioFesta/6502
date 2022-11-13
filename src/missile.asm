@@ -3,12 +3,14 @@
 .import main
 .import delay
 .import ship_enemies
+.import draw_level
 .export missile_one 
 
 
 .proc missile_one 
 
-load_missile_one:  
+load_missile_one: 
+
 
     LDA $0210
     LDA sprites_missile,X
@@ -31,6 +33,11 @@ load_missile_one:
 
 
 move_missile_one:
+
+    LDA $0304
+    TAX
+    CPX #$00
+    BEQ nothing
      
     CLD ;start move missile
     LDA $0210
@@ -49,7 +56,7 @@ draw_invalid:  ;start draw blank sprit
 
     LDA #$01
     STA $0211 ;end draw blank sprit
-    LDX #$04
+    ;LDX #$04
         
     RTS
 
@@ -79,27 +86,36 @@ valid_hit_x:
     
    
 draw_explosion: ;start draw explosion
+ 
+    LDA $0304 ;if win don't do nothing 
+    TAX
+    CPX #$00 
+    BEQ nothing ;end if win
 
-    LDA #$0b
-    STA $0211,Y
-    LDA $0304 ;validate if you already hit all ship
+    LDA #$0b ;draw explosion sprite
+    STA $0211,Y ;end draw explosion
+    
+    LDA $0304 ;validate if already hit all ship
     TAX
     DEX
     TXA
     STA $0304
+    JSR draw_invalid ;draw invalid missile
     CPX #$00
     BEQ player_win ;end validate
-    JMP draw_invalid  ;end draw explosion
-
 
 player_win: 
 
-    LDA #$08 
-    STA $0303
-    LDA #$02
-    STA $0304
-    JSR ship_enemies
+    JSR draw_level
+    ;STA $0303
+    ;LDA #$02
+    ;STA $0304
+    ;JSR ship_enemies
+
     RTS
+
+nothing: 
+  RTS
 
 
 .endproc

@@ -3,6 +3,7 @@
 .import main
 .export background_tiles
 .export background_scroll
+.export draw_level
 
 .proc background_tiles
 	
@@ -124,16 +125,10 @@
 
 .proc background_scroll
 
-	; LDA PPUSTATUS
-	; LDA #$20 ;start number
-	; STA PPUADDR
-	; LDA PPUADDR
-	; CLD
-	; ADC #$01
-	; STA PPUADDR
-	; LDX #$1f
-	; STX PPUDATA ;end number
-
+    LDA $0304 ;if win don't do nothing
+    TAX
+    CPX #$00
+    BEQ nothing ;end if win
 
 	LDA #$00 ;start scroll
 	STA PPUSCROLL 
@@ -155,5 +150,85 @@ reset_scroll:
   STA PPUSCROLL
   STA $0300
   RTS
+
+
+nothing:
+
+  RTS
+
+.endproc
+
+.proc draw_level
+
+	LDA #$20
+	STA PPUADDR
+	LDA #$cd
+	STA PPUADDR
+    LDX #$0f
+	STX PPUDATA
+
+	LDA #$20
+	STA PPUADDR
+	LDA #$ce
+	STA PPUADDR
+    LDX #$08
+	STX PPUDATA
+
+	LDA #$20
+	STA PPUADDR
+	LDA #$cf
+	STA PPUADDR
+    LDX #$19
+	STX PPUDATA 
+
+	LDA #$20
+	STA PPUADDR
+	LDA #$d0
+	STA PPUADDR
+    LDX #$08
+	STX PPUDATA
+
+	LDA #$20
+	STA PPUADDR
+	LDA #$d1
+	STA PPUADDR
+    LDX #$0f
+	STX PPUDATA
+
+	LDA #$20
+	STA PPUADDR
+	LDA #$d2
+	STA PPUADDR
+    LDX #$1f
+	STX PPUDATA
+
+	; finally, attribute table
+	LDA #$23
+	STA PPUADDR
+	LDA #$c2
+	STA PPUADDR
+	LDA #%01000000
+	STA PPUDATA
+
+	LDA #$23
+	STA PPUADDR
+	LDA #$e0
+	STA PPUADDR
+	LDA #%00001100
+	STA PPUDATA
+	
+
+vblankwait:       ; wait for another vblank before continuing
+	BIT PPUSTATUS
+	BPL vblankwait
+
+	LDA #%10010000  ; turn on NMIs, sprites use first pattern table
+	STA PPUCTRL
+	LDA #%00011110  ; turn on screen
+	STA PPUMASK
+
+	RTS
+
+
 
 .endproc

@@ -19,6 +19,7 @@
 .import move_enemies
 .import background_scroll
 
+
 .proc nmi_handler
 
   LDA #$00
@@ -124,10 +125,10 @@ ReadRigthDone:
   LDA #240 ;scroll size
   STA $0300 ;end scroll size
 
-  LDA #$04   ;size enemie ship (eg. each 4 number decimal is a ship)
+  LDA #$08   ;size enemie ship (eg. each 4 number decimal is a ship)
   STA $0303 ;end size enemie ship
   
-  LDA #$01 ;counter ship (eg. this always need to be the number of the enemie / 4)
+  LDA #$02 ;counter ship (eg. this always need to be the number of the enemie / 4)
   STA $0304 ;end counter
 
 
@@ -148,8 +149,8 @@ load_ship: ;start draw ship
 	BNE load_ship ;end draw ship
 
 	JSR background_tiles
- 
-	vblankwait:       ; wait for another vblank before continuing
+
+vblankwait:       ; wait for another vblank before continuing
 	BIT PPUSTATUS
 	BPL vblankwait
 

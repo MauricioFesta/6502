@@ -20,6 +20,11 @@ draw_enemies: ;start draw ship enemies
 
 
 .proc move_enemies ;start to move ship enemies
+    
+    LDA $0304
+    TAX
+    CPX #$00 
+    BEQ nothing
 
     LDX #$00
     LDY #$00
@@ -49,6 +54,10 @@ move_enemies_loop:
     BNE move_enemies_loop ;end move ship enemies
 
     RTS
+
+
+nothing:
+  RTS
 
 .endproc
  
