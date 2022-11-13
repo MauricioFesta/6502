@@ -92,6 +92,11 @@ draw_explosion: ;start draw explosion
     CPX #$00 
     BEQ nothing ;end if win
 
+    LDA $0211,Y ;validate if already explosed
+    TAX
+    CPX #$0b
+    BEQ nothing ;end validate
+
     LDA #$0b ;draw explosion sprite
     STA $0211,Y ;end draw explosion
     

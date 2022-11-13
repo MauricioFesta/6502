@@ -125,10 +125,10 @@ ReadRigthDone:
   LDA #240 ;scroll size
   STA $0300 ;end scroll size
 
-  LDA #$08   ;size enemie ship (eg. each 4 number decimal is a ship)
+  LDA #$0c   ;size enemie ship (eg. each 4 number decimal is a ship)
   STA $0303 ;end size enemie ship
   
-  LDA #$02 ;counter ship (eg. this always need to be the number of the enemie / 4)
+  LDA #$03 ;counter ship (eg. this always need to be the number of the enemie / 4)
   STA $0304 ;end counter
 
 
