@@ -152,16 +152,16 @@ reset_scroll:
 
 nothing:
 
-  LDA $0305
+  LDA $0305 ;validate if already hited all enemieship
   TAX
   CPX #$01
-  BNE draw_level
+  BNE draw_level ;end validate
   RTS
 
 draw_level:
 	LDA #$01
 	STA $0305
-	
+
 	LDA #$20
 	STA PPUADDR
 	LDA #$cd
@@ -201,7 +201,9 @@ draw_level:
 	STA PPUADDR
 	LDA #$d2
 	STA PPUADDR
-    LDX #$1f
+	LDA $0306
+	TAX
+    ;LDX #$1f
 	STX PPUDATA
 
 	; finally, attribute table

@@ -60,9 +60,9 @@ ReadBandYDone:
 ReadBack: 
   LDA $4016       ; player 1 - A
   AND #%00000001 
-  BEQ ReadStart  
+  BEQ ReadStart 
   JMP reset_handler
-  
+
 
 ReadStart: 
   LDA $4016       ; player 1 - A
@@ -130,6 +130,9 @@ ReadRigthDone:
   
   LDA #$01 ;counter ship (eg. this always need to be the number of the enemie / 4)
   STA $0304 ;end counter
+
+  LDA #$1f ;control the levels
+  STA $0306 ;end control
 
 
 load_palettes:
