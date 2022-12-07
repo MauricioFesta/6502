@@ -3,7 +3,6 @@
 .import main
 .export background_tiles
 .export background_scroll
-.export draw_level
 
 .proc background_tiles
 	
@@ -140,7 +139,6 @@
 	STA PPUSCROLL ;end scroll
 	STA $0300
 
-
 	RTS
 
 
@@ -154,12 +152,16 @@ reset_scroll:
 
 nothing:
 
+  LDA $0305
+  TAX
+  CPX #$01
+  BNE draw_level
   RTS
 
-.endproc
-
-.proc draw_level
-
+draw_level:
+	LDA #$01
+	STA $0305
+	
 	LDA #$20
 	STA PPUADDR
 	LDA #$cd
@@ -227,8 +229,8 @@ vblankwait:       ; wait for another vblank before continuing
 	LDA #%00011110  ; turn on screen
 	STA PPUMASK
 
-	RTS
-
+	JMP nothing
 
 
 .endproc
+

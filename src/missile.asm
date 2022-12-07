@@ -3,7 +3,6 @@
 .import main
 .import delay
 .import ship_enemies
-.import draw_level
 .export missile_one 
 
 
@@ -106,18 +105,6 @@ draw_explosion: ;start draw explosion
     TXA
     STA $0304
     JSR draw_invalid ;draw invalid missile
-    CPX #$00
-    BEQ player_win ;end validate
-
-player_win: 
-
-    JSR draw_level
-    ;STA $0303
-    ;LDA #$02
-    ;STA $0304
-    ;JSR ship_enemies
-
-    RTS
 
 nothing: 
   RTS
