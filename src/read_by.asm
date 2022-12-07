@@ -13,8 +13,14 @@
 
     RTI
 
-new_level: 
-  
+new_level:
+
+    LDA $0307 ;control qtd enemieship
+    TAX
+    INX
+    TXA
+    STA $0307 ;end control
+
     LDA $0303 ;increase by enemies ship each level
     TAX
     INX
@@ -23,9 +29,10 @@ new_level:
     INX
     TXA
     STA $0303 ;end increase
+  
 
-    LDA #$02
-    STA $0304 ;qtd / 4
+    LDA $0307
+    STA $0304 ;counter enemies
 
     LDA $0306 ;increase one leval
     TAX

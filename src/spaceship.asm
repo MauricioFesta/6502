@@ -131,6 +131,9 @@ ReadRigthDone:
   LDA #$01 ;counter ship (eg. this always need to be the number of the enemie / 4)
   STA $0304 ;end counter
 
+  LDA #$01
+  STA $0307
+
   LDA #$1f ;control the levels
   STA $0306 ;end control
 
