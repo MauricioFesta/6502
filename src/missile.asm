@@ -10,8 +10,6 @@
 
 load_missile_one: 
 
-
-    LDA $0210
     LDA sprites_missile,X
     STA $0210,X
     INX
@@ -60,25 +58,40 @@ draw_invalid:  ;start draw blank sprit
     RTS
 
 valid_hit_y: ;start valitadion Y | and x ___
+
     INY
     INY
     INY
     INY
+
     LDA $0210
     CLC
-    SBC $0210,Y
+    SBC $0210,Y 
+
+    CMP #$02
+    BEQ valid_hit_x
+    CMP #$04
+    BEQ valid_hit_x
     CMP #$06
     BEQ valid_hit_x
+    CMP #$08
+    BEQ valid_hit_x
+    CMP #$0a
+    BEQ valid_hit_x
+    
+
     CPY $0303
     BNE valid_hit_y
     JMP move_missile_one
 
 valid_hit_x:
+
     LDA $0213
     CLC
     SBC $0213,Y
     CMP #$00
     BEQ draw_explosion  
+
     CPY $0303
     BNE valid_hit_y
     JMP move_missile_one ;end validation y | ans x ___
