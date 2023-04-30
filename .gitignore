@@ -11,3 +11,4 @@ src/background_tiles.o
 src/ship_enemies.o
 src/missile.o
 src/utils.o
+spaceship.nes
