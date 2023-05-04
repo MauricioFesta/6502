@@ -177,10 +177,34 @@ compare_x:
 .endproc
 
 died:
-    LDA $0310
-    ADC #$01
-    STA $0310
+    LDX #$00
+    LDY #$00
+draw:
+
+    INY
+    INX
+    CPY #$04
+    BNE draw
+    JSR store
+    CPX #$14
+    BNE draw
+
     RTS
+
+store:
+    TXA
+    PHA
+    DEX
+    DEX
+    DEX
+    LDA sprites_explosion,X
+    STA $0200,X
+    PLA
+    TAX
+    LDY #$00
+    RTS
+
+
  
 sprites_enemies:
     .byte $01, $0c, $00, $18    
@@ -188,4 +212,12 @@ sprites_enemies:
     .byte $60, $0c, $00, $68
     .byte $33, $0c, $00, $77
     .byte $22, $0c, $00, $37
+
+sprites_explosion:
+    .byte $49, $0d, $00, $36
+    .byte $46, $0d, $00, $36
+    .byte $43, $0d, $00, $36
+    .byte $49, $0e, $00, $41
+    .byte $46, $0e, $00, $41
+
 

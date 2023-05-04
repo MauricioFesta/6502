@@ -10,7 +10,7 @@
 
 load_missile_one: 
 
-    LDA sprites_missile,X
+    LDA sprites_missile,X ;start draw missile
     STA $0210,X
     INX
     CPX #$04
