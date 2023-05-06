@@ -177,8 +177,42 @@ compare_x:
 .endproc
 
 died:
+
+   
+  
+    LDA #$75 ;move ship when hited
+    STA $0203
+    LDA #$7d
+    STA $0207
+    LDA #$75
+    STA $20b
+    LDA #$7d
+    STA $20f
+
+    LDA #$B4
+    STA $0200
+    STA $0204
+    LDA #$BC
+    STA $0208
+    STA $20c ;end move ship
+
+    LDA $0302  ;decrease life
+    TAX
+    DEX
+    TXA
+    STA $0302 ;end decrease
+
     LDX #$00
     LDY #$00
+    
+    CLD
+    LDA $0302
+    CMP #$00 
+    BEQ draw
+    
+
+    RTS
+
 draw:
 
     INY
@@ -204,7 +238,7 @@ store:
     LDY #$00
     RTS
 
-
+ 
  
 sprites_enemies:
     .byte $01, $0c, $00, $18    

@@ -137,6 +137,9 @@ ReadRigthDone:
   LDA #$1f ;control the levels
   STA $0306 ;end control
 
+  LDA #$04 ;max lifes
+  STA $0302 ;end max lifes
+
 
 load_palettes:
   LDA palettes,X
