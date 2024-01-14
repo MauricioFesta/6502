@@ -24,8 +24,7 @@ draw_enemies: ;start draw ship enemies
 .proc move_enemies ;start to move ship enemies foward
     
     LDA $0304
-    TAX
-    CPX #$00 
+    CMP #$00 
     BEQ nothing
 
     LDX #$00
@@ -241,17 +240,31 @@ store:
  
  
 sprites_enemies:
-    .byte $01, $0c, $00, $18    
-    .byte $50, $0c, $00, $36 
-    .byte $60, $0c, $00, $68
-    .byte $33, $0c, $00, $77
-    .byte $22, $0c, $00, $37
+    .byte $01, $0c, $00, $18
+    .byte $F, $0c, $00, $32
+    .byte $30, $0c, $00, $42
+    .byte $60, $0c, $00, $52
+    .byte $90, $0c, $00, $68
+    .byte $AA, $0c, $00, $78
+    .byte $C8, $0c, $00, $94
+    .byte $F, $0c, $00, $88
+    .byte $30, $0c, $00, $66
+    .byte $60, $0c, $00, $54
+    .byte $90, $0c, $00, $30
+    .byte $AA, $0c, $00, $10
 
 sprites_explosion:
     .byte $49, $0d, $00, $36
     .byte $46, $0d, $00, $36
     .byte $43, $0d, $00, $36
-    .byte $49, $0e, $00, $41
-    .byte $46, $0e, $00, $41
+    .byte $49, $0d, $00, $41
+    .byte $50, $0d, $00, $41
+    .byte $60, $0d, $00, $41
+    .byte $12, $0d, $00, $41
+    .byte $55, $0d, $00, $41
+    .byte $42, $0d, $00, $41
+    .byte $42, $0d, $00, $41
+    .byte $42, $0d, $00, $41
+    .byte $42, $0d, $00, $41
 
 
