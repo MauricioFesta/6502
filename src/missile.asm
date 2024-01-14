@@ -50,11 +50,10 @@ move_missile_one:
 
 
 draw_invalid:  ;start draw blank sprit
-
+    
     LDA #$01
     STA $0211 ;end draw blank sprit
-    ;LDX #$04
-        
+    ;LDX #$04    
     RTS
 
 valid_hit_y: ;start valitadion Y | and x ___
@@ -63,38 +62,39 @@ valid_hit_y: ;start valitadion Y | and x ___
     INY
     INY
     INY
-
+    
     LDA $0210
     CLC
-    SBC $0210,Y 
-
-    CMP #$02
-    BEQ valid_hit_x
-    CMP #$04
-    BEQ valid_hit_x
-    CMP #$06
-    BEQ valid_hit_x
-    CMP #$08
-    BEQ valid_hit_x
+    SBC $0210,Y
+    BMI verify_negative_x
+        
     CMP #$0a
-    BEQ valid_hit_x
-    
+    BCC valid_hit_x
+    JMP if_end_ship 
 
-    CPY $0303
-    BNE valid_hit_y
-    JMP move_missile_one
+verify_negative_x:
+    ADC #$06
+    BMI if_end_ship
 
 valid_hit_x:
 
     LDA $0213
     CLC
     SBC $0213,Y
-    CMP #$00
-    BEQ draw_explosion  
+    BMI verify_negative_y
+    
+    CMP #$0a
+    BCC draw_explosion   
 
+if_end_ship:
     CPY $0303
     BNE valid_hit_y
-    JMP move_missile_one ;end validation y | ans x ___
+    JMP move_missile_one
+
+verify_negative_y:
+    ADC #$06
+    BMI if_end_ship
+    JMP draw_explosion
     
    
 draw_explosion: ;start draw explosion
@@ -103,24 +103,23 @@ draw_explosion: ;start draw explosion
     TAX
     CPX #$00 
     BEQ nothing ;end if win
-
+        
     LDA $0211,Y ;validate if already explosed
-    TAX
-    CPX #$0b
+    CMP #$0b
     BEQ nothing ;end validate
 
     LDA #$0b ;draw explosion sprite
     STA $0211,Y ;end draw explosion
     
     LDA $0304 ;validate if already hit all ship
-    TAX
-    DEX
-    TXA
+    SEC
+    SBC #$01
     STA $0304
     JSR draw_invalid ;draw invalid missile
 
 nothing: 
-  RTS
+  JMP draw_invalid
+
 
 
 .endproc
