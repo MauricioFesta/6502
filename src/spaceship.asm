@@ -125,7 +125,7 @@ ReadRigthDone:
   LDA #240 ;scroll size
   STA $0300 ;end scroll size
 
-  LDA #$04   ;size enemie ship (eg. each 4 number decimal is a ship)
+  LDA #$4  ;size enemie ship (eg. each 4 number decimal is a ship)
   STA $0303 ;end size enemie ship
   
   LDA #$01 ;counter ship (eg. this always need to be the number of the enemie / 4)
@@ -133,6 +133,10 @@ ReadRigthDone:
 
   LDA #$01
   STA $0307
+
+  ;TMPPP
+  LDA #$10
+  STA $0308
 
   LDA #$1f ;control the levels
   STA $0306 ;end control
@@ -190,10 +194,10 @@ palettes:
 
 
 sprites_ship:
-  .byte $70, $05, $00, $10
-  .byte $70, $06, $00, $18	
-  .byte $78, $07, $00, $10
-  .byte $78, $08, $00, $18
+  .byte $BE, $05, $00, $10
+  .byte $BE, $06, $00, $18	
+  .byte $C6, $07, $00, $10
+  .byte $C6, $08, $00, $18
 
 .segment "CHR"
 .incbin "graphics.chr"
